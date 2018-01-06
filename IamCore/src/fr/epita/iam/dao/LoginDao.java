@@ -11,7 +11,7 @@ import fr.epita.iam.constants.SqlConstants;
 import fr.epita.iam.datamodel.Login;
 
 /**
- * Enterprise data object to contain database related logic
+ * Enterprise data object class to contain database related operations for the login.
  * 
  * @author raaool
  *

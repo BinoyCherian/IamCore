@@ -39,7 +39,7 @@ public class IdentitiesDao {
 	 * @return boolean TRUE OR FALSE
 	 */
 	public boolean addIdentity(Identity identity) {
-
+		//TODO test method later.
 		if (connection != null) {
 			try {
 				preparedStatement = connection.prepareStatement(SqlConstants.INSERT_IDENTITY);
@@ -59,6 +59,37 @@ public class IdentitiesDao {
 				}
 
 			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
+	
+	
+	/**
+	 * Method to delete an identity from the table IDENTITIES
+	 * 
+	 * @param identity The Identity object
+	 * @return boolean TRUE OR FALSE
+	 */
+	public boolean deleteIdentity(Identity identity) {
+		//TODO test method later.
+		if (connection != null) {
+
+			try {
+				preparedStatement=connection.prepareStatement(SqlConstants.DELETE_IDENTITY);
+				preparedStatement.setString(1, identity.getUid());
+				int executed=preparedStatement.executeUpdate();
+				
+				if(executed>0) {
+					System.out.println("Executed");
+					return true;
+				}
+				else {
+					System.out.println("Error");
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
