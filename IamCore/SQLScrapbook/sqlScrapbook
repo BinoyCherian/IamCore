@@ -1,0 +1,11 @@
+create table login(
+	login_email varchar(50) NOT NULL UNIQUE,
+	password VARCHAR(50) NOT NULL
+)
+
+select * from LOGIN
+
+INSERT INTO LOGIN 
+VALUES ('ROOT@IAMCORE.COM','ROOT')
+
+select * from idenity
