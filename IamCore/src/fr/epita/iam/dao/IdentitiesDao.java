@@ -5,6 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import org.apache.derby.client.am.SqlException;
+
+import fr.epita.iam.constants.Constants;
 import fr.epita.iam.constants.DBProperties;
 import fr.epita.iam.constants.SqlConstants;
 import fr.epita.iam.datamodel.Identity;
@@ -95,7 +98,55 @@ public class IdentitiesDao {
 		}
 		return false;
 	}
+	
+	/**
+	 * Method to update,delete and add a record into the identities table.
+	 * 
+	 * @param identity The identity object
+	 * @param operation The operation to be performed
+	 * @return boolean TRUE or FALSE
+	 */
+	public boolean updateDeleteAndInsert(Identity identity, String operation) {
+		
+		//TODO need to test
 
+		int executed = 0;
+		try {
+			if (operation != null && connection != null) {
+				if (operation.equalsIgnoreCase(Constants.UPDATE_OPERATION)) {
+
+					preparedStatement = connection.prepareStatement(SqlConstants.UPDATE_IDENTITY);
+					preparedStatement.setString(1, identity.getDisplayName());
+					preparedStatement.setString(2, identity.getEmail());
+
+				} else if (operation.equalsIgnoreCase(Constants.CREATE_OPERATION)) {
+
+					preparedStatement = connection.prepareStatement(SqlConstants.INSERT_IDENTITY);
+					preparedStatement.setString(1, identity.getDisplayName());
+					preparedStatement.setString(2, identity.getEmail());
+					
+				} else if(operation.equalsIgnoreCase(Constants.DELETE_OPERATION)) {
+					
+					preparedStatement=connection.prepareStatement(SqlConstants.DELETE_IDENTITY);
+					preparedStatement.setString(1, identity.getUid());
+				}
+
+				executed = preparedStatement.executeUpdate();
+
+				if (executed > 0) {
+					System.out.println("Record updated");
+					return true;
+				} else {
+					System.out.println("Issue with operation");
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	
 	/**
 	 * Initialise the database.
 	 * 

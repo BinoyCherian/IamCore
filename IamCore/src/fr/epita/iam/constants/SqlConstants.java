@@ -16,5 +16,8 @@ public class SqlConstants {
 	
 	/** Prepared statement to delete from IDENTITIES*/
 	public static final String DELETE_IDENTITY="DELETE FROM IDENTITIES WHERE UID=?";
+	
+	/** Prepared statement to update in IDENTITIES*/
+	public static final String UPDATE_IDENTITY="UPDATE IDENTITIES SET UID=?, DISPLAYNAME=?, EMAIL=? ";
 
 }
