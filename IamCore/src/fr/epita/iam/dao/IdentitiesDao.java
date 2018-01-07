@@ -116,8 +116,9 @@ public class IdentitiesDao {
 				if (operation.equalsIgnoreCase(Constants.UPDATE_OPERATION)) {
 
 					preparedStatement = connection.prepareStatement(SqlConstants.UPDATE_IDENTITY);
-					preparedStatement.setString(1, identity.getDisplayName());
-					preparedStatement.setString(2, identity.getEmail());
+					preparedStatement.setString(1, identity.getUid());
+					preparedStatement.setString(2, identity.getDisplayName());
+					preparedStatement.setString(3, identity.getEmail());
 
 				} else if (operation.equalsIgnoreCase(Constants.CREATE_OPERATION)) {
 

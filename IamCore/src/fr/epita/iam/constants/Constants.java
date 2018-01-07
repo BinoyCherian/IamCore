@@ -28,16 +28,16 @@ public class Constants {
 	/** The constant for database url */
 	public static final String DB_URL = "URL";
 
-	/** The constant for the create operation */
+	/** The constatnt for the create operation */
 	public static final String CREATE_OPERATION = "create";
 
-	/** The constant for the read operation */
+	/** The constatnt for the read operation */
 	public static final String READ_OPERATION = "read";
 
-	/** The constant for the create operation */
+	/** The constatnt for the create operation */
 	public static final String UPDATE_OPERATION = "update";
 
-	/** The constant for the delete operation */
+	/** The constatnt for the delete operation */
 	public static final String DELETE_OPERATION = "delete";
 
 }
