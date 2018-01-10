@@ -39,7 +39,7 @@ public class Identity {
 	/**
 	 * Sets the display name
 	 * 
-	 * @param display name
+	 * @param displayName The display name
 	 */
 	public void setDisplayName(String displayName) {
 		this.displayName = displayName;
@@ -48,7 +48,7 @@ public class Identity {
 	/**
 	 * Gets the user id
 	 * 
-	 * @return String the user id
+	 * @return uid The user id
 	 */
 	public String getUid() {
 		return uid;
@@ -57,7 +57,7 @@ public class Identity {
 	/**
 	 * Sets the user id
 	 * 
-	 * @param user id
+	 * @param uid The user id
 	 */
 	public void setUid(String uid) {
 		this.uid = uid;
@@ -76,7 +76,7 @@ public class Identity {
 	/**
 	 * Sets the e-mail address
 	 * 
-	 * @param email
+	 * @param email The e-mail address
 	 */
 	public void setEmail(String email) {
 		this.email = email;

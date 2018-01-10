@@ -40,4 +40,10 @@ public class Constants {
 	/** The constant for the delete operation */
 	public static final String DELETE_OPERATION = "delete";
 
+	/** The constant for the space*/
+	public static final String SPACE = " ";
+
+	/**The constant for the comma */
+	public static final String COMMA = ",";
+	
 }

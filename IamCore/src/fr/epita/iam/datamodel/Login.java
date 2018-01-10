@@ -26,7 +26,7 @@ public class Login {
 	/**
 	 * Sets the e-mail.
 	 * 
-	 * @param email
+	 * @param email The e-mail address
 	 */
 	public void setEmail(String email) {
 		this.email = email;
@@ -44,11 +44,9 @@ public class Login {
 	/**
 	 * Sets the password.
 	 * 
-	 * @param password
+	 * @param password The password
 	 */
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-
 }
