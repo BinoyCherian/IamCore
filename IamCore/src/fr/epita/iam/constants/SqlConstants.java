@@ -20,16 +20,22 @@ public class SqlConstants {
 	/** Prepared statement to update in IDENTITIES*/
 	public static final String UPDATE_IDENTITY="UPDATE IDENTITIES SET";
 	
-	/**The constant for the display name to be used in the update scenario */
-	public static final String UPDATE_DISPLAY_NAME_CONDITION="DISPLAY_NAME=?";
+	/** The constant for the display name to be used in the update scenario */
+	public static final String DISPLAY_NAME_CLAUSE="DISPLAY_NAME=?";
 	
-	/**The constant for the email to be used in the update scenario */
-	public static final String UPDATE_EMAIL_CONDITION="EMAIL=?";
+	/** The constant for the email to be used in the update scenario */
+	public static final String EMAIL_CLAUSE="EMAIL=?";
 	
 	/** The constant for the WHERE CLAUSE*/
-	public static final String WHERE = "WHERE";
+	public static final String WHERE_CLAUSE = "WHERE";
 
-	/**The constant for the uid to be used in the update scenario */
-	public static final String UPDATE_UID_CONDITION="UID=?";
+	/** The constant for the uid to be used in the update scenario */
+	public static final String UID_CLAUSE="UID=?";
+	
+	/** The sql query to select rows from the IDENTITIES table */
+	public static final String SELECT_IDENTITY="select * from IDENTITIES";
+	
+	/** The constant for the AND CLAUSE*/
+	public static final String AND_CLAUSE = "AND";
 
 }

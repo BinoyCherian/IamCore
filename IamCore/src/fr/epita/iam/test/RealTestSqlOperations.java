@@ -8,7 +8,9 @@ import org.junit.Test;
 
 import fr.epita.iam.constants.Constants;
 import fr.epita.iam.dao.IdentitiesDao;
+import fr.epita.iam.dao.LoginDao;
 import fr.epita.iam.datamodel.Identity;
+import fr.epita.iam.datamodel.Login;
 
 /**
  * Enterprise test class contaning the test methods.
@@ -105,8 +107,21 @@ public class RealTestSqlOperations{
 		Identity identity =new Identity();
 		identity.setUid("11136209");
 		
-		boolean executed= new IdentitiesDao().deleteIdentity(identity);
+		//TODO test the new method
+		boolean executed= new IdentitiesDao().updateDeleteAndInsert(identity,Constants.DELETE_OPERATION);
 		assertTrue(executed);
+		
+	}
+	
+	@Test
+	public void testAdmin() {
+		Login login=new Login();
+		
+		login.setEmail("root@iamcore.com");
+		login.setPassword("ROOT");
+		
+		boolean loginSucess=new LoginDao().checkLogin(login);
+		assertTrue(loginSucess);
 		
 	}
 }
