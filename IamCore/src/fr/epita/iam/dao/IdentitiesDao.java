@@ -6,10 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 import fr.epita.iam.constants.Constants;
-import fr.epita.iam.constants.DBProperties;
 import fr.epita.iam.constants.SqlConstants;
 import fr.epita.iam.datamodel.Identity;
 
@@ -19,7 +17,7 @@ import fr.epita.iam.datamodel.Identity;
  * @author raaool
  *
  */
-public class IdentitiesDao {
+public class IdentitiesDao implements DaoInterface{
 	
 	/** The connection object */
 	Connection connection;
@@ -27,12 +25,11 @@ public class IdentitiesDao {
 	/** The prepared statement */
 	PreparedStatement preparedStatement;
 	
-	
 	/**
 	 * Constructor
 	 */
 	public IdentitiesDao() {
-			initialiseDatabase(DBProperties.initialiseProperties());
+			connection = DBConnection.getConnection();
 	}
 	
 	
@@ -243,6 +240,7 @@ public class IdentitiesDao {
 			while (resultSet.next()) {
 				// assemble the object and send back the list
 				identityLocal=new Identity();
+				//TODO fix string constant here
 				identityLocal.setDisplayName(resultSet.getString("DISPLAY_NAME"));
 				identityLocal.setEmail(resultSet.getString("EMAIL"));
 				identityLocal.setUid(resultSet.getString("UID"));
@@ -251,7 +249,7 @@ public class IdentitiesDao {
 			}
 
 		} catch (SQLException e) {
-
+			e.printStackTrace();
 		}
 		return identitiesList;
 	}
@@ -294,16 +292,4 @@ public class IdentitiesDao {
 
 		return temp;
 	}
-
-
-	/**
-	 * Initialise the database.
-	 * 
-	 * @param properties The properties object
-	 */
-	private void initialiseDatabase(Properties properties) {
-
-		connection = DBConnection.getConnection(properties);
-	}
-
 }

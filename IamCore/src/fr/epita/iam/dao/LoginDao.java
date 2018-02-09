@@ -4,9 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Properties;
 
-import fr.epita.iam.constants.DBProperties;
 import fr.epita.iam.constants.SqlConstants;
 import fr.epita.iam.datamodel.Login;
 
@@ -16,7 +14,7 @@ import fr.epita.iam.datamodel.Login;
  * @author raaool
  *
  */
-public class LoginDao {
+public class LoginDao implements LoginInterface{
 	
 	/** The connection object */
 	Connection connection;
@@ -28,18 +26,9 @@ public class LoginDao {
 	 * Constructor
 	 */
 	public LoginDao() {
-		initialiseDatabase(DBProperties.initialiseProperties());
+		connection = DBConnection.getConnection();
 	}
 	
-	/**
-	 * Initialise the database.
-	 * 
-	 * @param properties The properties object
-	 */
-	private void initialiseDatabase(Properties properties) {
-		
-		connection=DBConnection.getConnection(properties);
-	}
 
 	/**
 	 * Method to check the login credentials.
