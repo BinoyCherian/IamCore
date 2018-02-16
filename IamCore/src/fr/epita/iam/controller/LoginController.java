@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import fr.epita.iam.constants.Constants;
 import fr.epita.iam.datamodel.Login;
 import fr.epita.iam.service.LoginService;
+import fr.epita.logger.Logger;
 
 /**
  * Enterprise data object representing the controller class
@@ -18,6 +19,10 @@ import fr.epita.iam.service.LoginService;
  *
  */
 public class LoginController extends HttpServlet{
+	
+	/** The logger. */
+	private static final Logger logger = new Logger(LoginController.class);
+
 
 	/** 
 	 * The doGet method
@@ -37,9 +42,13 @@ public class LoginController extends HttpServlet{
 			Boolean loginStatus = loginService.loginservice(loginRequest);
 
 			if (loginStatus) {
-				System.out.println("Admin, Send to a new page with more rights");
+				logger.info("Admin, Send to a new page with more rights");
+				
 			} else {
 				// deny access
+				logger.error("Issue with login. Redirecting for error page.");
+				
+				
 			}
 
 		}

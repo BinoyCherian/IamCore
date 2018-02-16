@@ -37,5 +37,12 @@ public class SqlConstants {
 	
 	/** The constant for the AND CLAUSE*/
 	public static final String AND_CLAUSE = "AND";
+	
+	/**
+	 * Private Constructor
+	 */
+	private SqlConstants() {
+		
+	}
 
 }

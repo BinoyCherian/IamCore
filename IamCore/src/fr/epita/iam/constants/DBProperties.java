@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import fr.epita.logger.Logger;
+
 /**
  * Enterprise data class to load the properties for dao classes.
  * 
@@ -14,11 +16,20 @@ import java.util.Properties;
 public class DBProperties {
 	
 	/** The properties object */
-	static Properties dbProperties;
+	static Properties properties;
 	
 	/** The inputstream object */
 	static InputStream inputStream;
+	
+	/** The logger. */
+	private static final Logger logger = new Logger(DBProperties.class);
 
+	/**
+	 * Private Constructor.
+	 */
+	private DBProperties() {
+		
+	}
 	
 	/**
 	 * Method to initialise the properties from the resource folder.
@@ -30,37 +41,38 @@ public class DBProperties {
 	 */
 	public static Properties initialiseProperties() {
 
-		dbProperties = new Properties();
+		properties = new Properties();
 		
 		try {
-			inputStream = new FileInputStream(System.getProperty("conf"));
+			if (System.getProperty(Constants.CONF) == null) {
+				logger.error("System property needs to be set.");
+			}
+			
+			inputStream = new FileInputStream(System.getProperty(Constants.CONF));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			System.out.println("Issue while loading the property from system property: conf");
-			e.printStackTrace();
+			logger.error(Constants.EXCEPTION, e);
 		}
 
 		if (inputStream == null) {
-			System.out.println("Loading from the local project file");
+			logger.info("Loading from the local project file");
 			inputStream = DBProperties.class.getClassLoader().getResourceAsStream("db.properties");
 
-			if (inputStream.equals(null)) {
-				System.out.println("Could not find the property file from the project space");
+			if (inputStream == null) {
+				logger.error("Could not find the property file from the project space");
 			}
 		}
 		
 		if (inputStream != null) {
 			try {
-				dbProperties.load(inputStream);
+				properties.load(inputStream);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.error(Constants.EXCEPTION, e);
 			}
 		} else {
-			System.out.println("Input stream could not be loaded from both system property or the resource folder in the "
+			logger.error("Input stream could not be loaded from both system property or the resource folder in the "
 					+ "project space");
 		}
 
-		return dbProperties;
+		return properties;
 	}
 }

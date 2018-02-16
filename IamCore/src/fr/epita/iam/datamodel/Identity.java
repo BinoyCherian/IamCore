@@ -3,8 +3,6 @@
  */
 package fr.epita.iam.datamodel;
 
-import java.util.Map;
-
 /**
  * Enterprise data object holding Identity Information.
  * 

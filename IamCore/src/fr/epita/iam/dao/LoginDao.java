@@ -5,8 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import fr.epita.iam.constants.Constants;
 import fr.epita.iam.constants.SqlConstants;
 import fr.epita.iam.datamodel.Login;
+import fr.epita.logger.Logger;
 
 /**
  * Enterprise data object class to contain database related operations for the login.
@@ -21,6 +23,10 @@ public class LoginDao implements LoginInterface{
 	
 	/** The prepared statement */
 	PreparedStatement preparedStatement;
+	
+	/** The logger. */
+	private static final Logger logger = new Logger(DBConnection.class);
+
 	
 	/**
 	 * Constructor
@@ -38,26 +44,34 @@ public class LoginDao implements LoginInterface{
 	 */
 	public boolean checkLogin(Login loginRequest) {
 		
+		ResultSet resultSet=null;
+		
 		try {
-			//TODO null check on connection object
 			preparedStatement=connection.prepareStatement(SqlConstants.CHECK_LOGIN);
 			
 			// The username can be case-insensitive but password cannot be tolerated
 			preparedStatement.setString(1, loginRequest.getEmail().toUpperCase());
 			preparedStatement.setString(2, loginRequest.getPassword());
 			
-			ResultSet resultSet=preparedStatement.executeQuery();
+			resultSet=preparedStatement.executeQuery();
 			
 			if(resultSet.next()) {
-				System.out.println("Found");
+				logger.error("Admin found");
 				return true;
 			}
 			else {
-				System.out.println("Login issue");
+				logger.error("Login issue");
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(Constants.EXCEPTION, e);
+		}
+		finally {
+			try {
+				if(resultSet != null)
+				resultSet.close();
+			} catch (SQLException e) {
+				logger.error(Constants.EXCEPTION, e);			}
 		}
 		
 		return false;

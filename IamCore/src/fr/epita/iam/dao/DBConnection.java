@@ -7,6 +7,7 @@ import java.util.Properties;
 
 import fr.epita.iam.constants.Constants;
 import fr.epita.iam.constants.DBProperties;
+import fr.epita.logger.Logger;
 
 /**
  * Enterprise data object for the database connection
@@ -21,9 +22,21 @@ public class DBConnection {
 	
 	/** The properties file. */
 	private static Properties properties;
+	
+	/** The logger. */
+	private static final Logger logger = new Logger(DBConnection.class);
 
 	static {
 		properties = DBProperties.initialiseProperties();
+	}
+	
+	
+	/**
+	 * Private Constructor.
+	 * 
+	 */
+	private DBConnection() {
+		
 	}
 	
 	/**
@@ -33,29 +46,16 @@ public class DBConnection {
 	 * @return Connection The connection object
 	 */
 	public static Connection getConnection(){
-		try {
+		
 			try {
 				Class.forName(properties.getProperty(Constants.DRIVER)).newInstance();
 				con=DriverManager.getConnection(properties.getProperty(Constants.DB_URL), properties.getProperty(Constants.DB_USER), 
 						properties.getProperty(Constants.DB_PASSWORD));
 				
-				if (con == null)
-				{
-					System.out.println("Connection error");
-				}
-				
-			} catch (InstantiationException | IllegalAccessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e) {
+				logger.error(Constants.EXCEPTION, e);
 			}
 			
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		return con;
 	}
 }

@@ -10,6 +10,7 @@ import java.util.List;
 import fr.epita.iam.constants.Constants;
 import fr.epita.iam.constants.SqlConstants;
 import fr.epita.iam.datamodel.Identity;
+import fr.epita.logger.Logger;
 
 /**
  * Enterprise data access object to handle database operations for the identities.
@@ -24,6 +25,10 @@ public class IdentitiesDao implements DaoInterface{
 	
 	/** The prepared statement */
 	PreparedStatement preparedStatement;
+	
+	/** The logger. */
+	private static final Logger logger = new Logger(IdentitiesDao.class);
+
 	
 	/**
 	 * Constructor
@@ -40,6 +45,7 @@ public class IdentitiesDao implements DaoInterface{
 	 * @return boolean TRUE OR FALSE
 	 * @deprecated
 	 */
+	@Deprecated
 	public boolean addIdentity(Identity identity) {
 		if (connection != null) {
 			try {
@@ -52,14 +58,14 @@ public class IdentitiesDao implements DaoInterface{
 				int executed = preparedStatement.executeUpdate();
 
 				if (executed > 0) {
-					System.out.println("Executed");
+					logger.info("Executed");
 					return true;
 				} else {
-					System.out.println("Failure");
+					logger.error("Failure");
 				}
 
 			} catch (SQLException e) {
-				e.printStackTrace();
+				logger.error(Constants.EXCEPTION, e);
 			}
 		}
 		return false;
@@ -73,6 +79,7 @@ public class IdentitiesDao implements DaoInterface{
 	 * @return boolean TRUE OR FALSE
 	 * @deprecated
 	 */
+	@Deprecated
 	public boolean deleteIdentity(Identity identity) {
 		if (connection != null) {
 
@@ -82,14 +89,14 @@ public class IdentitiesDao implements DaoInterface{
 				int executed=preparedStatement.executeUpdate();
 				
 				if(executed>0) {
-					System.out.println("Executed");
+					logger.info("Executed");
 					return true;
 				}
 				else {
-					System.out.println("Error");
+					logger.error("Error");
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				logger.error(Constants.EXCEPTION, e);
 			}
 		}
 		return false;
@@ -133,17 +140,23 @@ public class IdentitiesDao implements DaoInterface{
 				executed = preparedStatement.executeUpdate();
 
 				if (executed > 0) {
-					System.out.println("Record updated");
+					logger.info("Record updated");
 					return true;
 				} else {
-					System.out.println("Issue with operation");
+					logger.error("Issue with operation");
 				}
 			}
 			
-			preparedStatement.close();
-			connection.close();
+			if (preparedStatement != null) {
+				preparedStatement.close();
+			}
+
+			if (connection != null) {
+				connection.close();
+			}
+			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(Constants.EXCEPTION, e);
 		}
 		return false;
 	}
@@ -173,8 +186,6 @@ public class IdentitiesDao implements DaoInterface{
 			preparedStatement.setString(2, identity.getEmail());
 			preparedStatement.setString(3, identity.getUid());
 		}
-
-		
 	}
 
 	
@@ -190,19 +201,16 @@ public class IdentitiesDao implements DaoInterface{
 		String modifiedSqlString=updateIdentity;
 		
 		if (identity.getDisplayName() != null && identity.getEmail() == null) {
-			//modifiedSqlString = modifiedSqlString + " DISPLAY_NAME=? WHERE UID=?";
 			modifiedSqlString=modifiedSqlString + Constants.SPACE+ SqlConstants.DISPLAY_NAME_CLAUSE+Constants.SPACE+ 
 					SqlConstants.WHERE_CLAUSE+Constants.SPACE+SqlConstants.UID_CLAUSE;
 		}
 
 		if (identity.getEmail() != null && identity.getDisplayName() == null) {
-			//modifiedSqlString = modifiedSqlString + "EMAIL=? WHERE UID=?";
 			modifiedSqlString = modifiedSqlString + Constants.SPACE+ SqlConstants.EMAIL_CLAUSE+Constants.SPACE+
 					SqlConstants.WHERE_CLAUSE+Constants.SPACE+SqlConstants.UID_CLAUSE;
 		}
 		
 		if(identity.getEmail() != null && identity.getDisplayName() != null) {
-			//modifiedSqlString=modifiedSqlString +"DISPLAY_NAME=?, EMAIL=? WHERE UID=?";
 			
 			modifiedSqlString = modifiedSqlString + Constants.SPACE + SqlConstants.DISPLAY_NAME_CLAUSE
 					+ Constants.COMMA + Constants.SPACE + SqlConstants.EMAIL_CLAUSE + Constants.SPACE
@@ -218,78 +226,60 @@ public class IdentitiesDao implements DaoInterface{
 	 * @param identity The search criteria
 	 * @return List The list of identities
 	 */
-	public List<Identity> getIdentities(Identity identity) {
+	public List<Identity> getIdentities(Identity criteria) {
 		
 		List<Identity> identitiesList=null;
 		Identity identityLocal=null;
+		ResultSet resultSet = null;
+		
+		final String sqlString = "SELECT DISPLAY_NAME, EMAIL, UID FROM IDENTITIES " + "WHERE (? IS NULL OR DISPLAY_NAME LIKE ?) "
+				+ "AND (? IS NULL OR EMAIL LIKE ?) " + "AND (? IS NULL OR UID = ?)";
+
 
 		try {
-			if (identity == null) {
+			if (criteria == null) {
 				preparedStatement = connection.prepareStatement(SqlConstants.SELECT_IDENTITY);
 			} else {
 				preparedStatement = connection
-						.prepareStatement(modifySearchQuery(SqlConstants.SELECT_IDENTITY, identity));
-			}
-
-			ResultSet resultSet = preparedStatement.executeQuery();
-			
-			if(resultSet.getFetchSize()>0) {
-				identitiesList=new ArrayList<>();
-			}
-
-			while (resultSet.next()) {
-				// assemble the object and send back the list
-				identityLocal=new Identity();
-				//TODO fix string constant here
-				identityLocal.setDisplayName(resultSet.getString("DISPLAY_NAME"));
-				identityLocal.setEmail(resultSet.getString("EMAIL"));
-				identityLocal.setUid(resultSet.getString("UID"));
+						.prepareStatement(sqlString);
 				
-				identitiesList.add(identityLocal);
-			}
+				preparedStatement.setString(1, criteria.getDisplayName());
+				preparedStatement.setString(2, criteria.getDisplayName() + "%");
+				preparedStatement.setString(3, criteria.getEmail());
+				preparedStatement.setString(4, criteria.getEmail() + "%");
+				preparedStatement.setString(5, criteria.getUid());
+				preparedStatement.setString(6, criteria.getUid());
 
+			}
+			
+			resultSet = preparedStatement.executeQuery();
+			
+			if(resultSet != null) {
+				identitiesList=new ArrayList<>();
+				
+				while (resultSet.next()) {
+					// assemble the object and send back the list
+					identityLocal=new Identity();
+					identityLocal.setDisplayName(resultSet.getString(Constants.DISPLAY_NAME_DB_COLOUMN));
+					identityLocal.setEmail(resultSet.getString(Constants.EMAIL_DB_COLOUMN));
+					identityLocal.setUid(resultSet.getString(Constants.UID_DB_COLOUMN));
+					
+					identitiesList.add(identityLocal);
+				}
+			}else {
+				logger.info("No details found for identity: "+criteria);
+			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(Constants.EXCEPTION, e);
+		}
+		finally {
+			try {
+				if(resultSet != null)
+				resultSet.close();
+			} catch (SQLException e) {
+				logger.error(Constants.EXCEPTION, e);
+			}
 		}
 		return identitiesList;
-	}
-
-
-	/**
-	 * The search query is designed to search for all the identities if the identity object is passed as null.
-	 * else if the object is passed it would construct the query using the and operator between all the properties
-	 * passed to the identity object except the user id.
-	 * 
-	 * @param selectIdentity The select query 
-	 * @param identity The identity object
-	 * @return String The sql query
-	 */
-	private String modifySearchQuery(String selectIdentity, Identity identity) {
-		
-		//TODO Need to test
-
-		String temp = selectIdentity;
-
-		if (identity.getUid() != null) {
-
-			// select * from identities where x=? and y=?
-			if (identity.getDisplayName() != null && identity.getEmail() != null) {
-				temp = temp + Constants.SPACE + SqlConstants.WHERE_CLAUSE + Constants.SPACE
-						+ SqlConstants.DISPLAY_NAME_CLAUSE + "AND" + SqlConstants.EMAIL_CLAUSE;
-			}
-
-			if (identity.getDisplayName() != null && identity.getEmail() == null) {
-				// select * from IDENTITIES where displaname=?
-				temp = temp + Constants.SPACE + SqlConstants.WHERE_CLAUSE + Constants.SPACE
-						+ SqlConstants.DISPLAY_NAME_CLAUSE;
-			}
-
-			if (identity.getEmail() != null && identity.getDisplayName() == null) {
-				temp=temp+ Constants.SPACE + SqlConstants.WHERE_CLAUSE + Constants.SPACE
-						+ SqlConstants.EMAIL_CLAUSE;
-			}
-		}
-
-		return temp;
 	}
 }
