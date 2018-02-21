@@ -19,6 +19,9 @@ import fr.epita.logger.Logger;
  */
 public class LoginController extends HttpServlet{
 	
+	/** The default serial version id. */
+	private static final long serialVersionUID = -7262828497113954905L;
+	
 	/** The logger. */
 	private static final Logger logger = new Logger(LoginController.class);
 

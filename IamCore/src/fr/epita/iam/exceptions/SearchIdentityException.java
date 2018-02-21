@@ -17,7 +17,7 @@ public class SearchIdentityException extends Exception {
 	private static final long serialVersionUID = 6314301050822548637L;
 	
 	/** The idenity which could not be searched. */
-	private Identity searchIdentity;
+	private final Identity searchIdentity;
 	
 	/**
 	 * The constructor.

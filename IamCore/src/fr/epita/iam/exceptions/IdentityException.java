@@ -10,7 +10,7 @@ public class IdentityException extends Exception {
 	/** The identity which has the issue. */
 	private final Identity faultyIdentity;
 	
-	private String operation;
+	private final String operation;
 	
 	/**
 	 * The constructor.
