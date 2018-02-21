@@ -17,6 +17,7 @@ public class IdentityException extends Exception {
 	 * 
 	 * @param cause The cause of the exception.
 	 * @param identity The identity
+	 * @param operation The type of the operation.
 	 */
 	public IdentityException(Exception cause, Identity identity, String operation) {
 		this.faultyIdentity=identity;

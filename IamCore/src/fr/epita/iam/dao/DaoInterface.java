@@ -43,7 +43,7 @@ public interface DaoInterface {
 	 * 
 	 * @param identity The Identity in the request to be searched.
 	 * @return List The list of Identities.
-	 * @throws SearchIdentityException 
+	 * @throws SearchIdentityException The exception related to the search operation.
 	 */
 	List<Identity> getIdentities(Identity identity) throws SearchIdentityException;
 }
