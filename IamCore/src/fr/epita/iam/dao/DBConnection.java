@@ -42,7 +42,6 @@ public class DBConnection {
 	/**
 	 * Method to create and return a database connection
 	 * 
-	 * @param properties The properties object
 	 * @return Connection The connection object
 	 */
 	public static Connection getConnection(){

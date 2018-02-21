@@ -2,7 +2,6 @@ package fr.epita.iam.controller;
 
 import java.io.IOException;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,7 +29,7 @@ public class LoginController extends HttpServlet{
 	 * @see javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
 	 */
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp){
 		
 		if ((req.getRequestURL() + "").contains(Constants.LOGIN)) {
 
@@ -43,14 +42,19 @@ public class LoginController extends HttpServlet{
 
 			if (loginStatus) {
 				logger.info("Admin, Send to a new page with more rights");
+				try {
+					 //req.getRequestDispatcher("adminPage.jsp").forward(req, resp);
+					 resp.sendRedirect("adminPage.html");
+					 
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
 			} else {
 				// deny access
 				logger.error("Issue with login. Redirecting for error page.");
-				
-				
 			}
-
 		}
 	}
 }

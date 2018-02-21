@@ -221,9 +221,8 @@ public class IdentitiesDao implements DaoInterface{
 	
 	/**
 	 * Gets the list of identities from the sql table IDENTITIES. 
-	 * The search string is based on the conditions mentioned in the {@link #modifySearchQuery(String, Identity)}.
 	 * 
-	 * @param identity The search criteria
+	 * @param criteria The search criteria
 	 * @return List The list of identities
 	 */
 	public List<Identity> getIdentities(Identity criteria) {
