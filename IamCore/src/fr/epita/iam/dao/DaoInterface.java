@@ -3,6 +3,8 @@ package fr.epita.iam.dao;
 import java.util.List;
 
 import fr.epita.iam.datamodel.Identity;
+import fr.epita.iam.exceptions.IdentityException;
+import fr.epita.iam.exceptions.SearchIdentityException;
 
 /**
  * The interface for the Identity database related operations.
@@ -32,14 +34,16 @@ public interface DaoInterface {
 	 * @param identity The Identity in the request to be updated,deleted or inserted.
 	 * @param operation The operation to be performed. The value "create" inserts, value "update" updates and "delete" deletes. 
 	 * @return TRUE/FALSE
+	 * @throws IdentityException The exception related to update, insert or create database operation
 	 */
-	boolean updateDeleteAndInsert(Identity identity, String operation);
+	boolean updateDeleteAndInsert(Identity identity, String operation) throws IdentityException;
 	
 	/**
 	 * The abstract operation to search for identities.
 	 * 
 	 * @param identity The Identity in the request to be searched.
 	 * @return List The list of Identities.
+	 * @throws SearchIdentityException 
 	 */
-	List<Identity> getIdentities(Identity identity);
+	List<Identity> getIdentities(Identity identity) throws SearchIdentityException;
 }

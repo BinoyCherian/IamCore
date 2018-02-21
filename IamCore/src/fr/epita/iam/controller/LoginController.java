@@ -43,12 +43,10 @@ public class LoginController extends HttpServlet{
 			if (loginStatus) {
 				logger.info("Admin, Send to a new page with more rights");
 				try {
-					 //req.getRequestDispatcher("adminPage.jsp").forward(req, resp);
 					 resp.sendRedirect("adminPage.html");
 					 
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.error(Constants.EXCEPTION, e);
 				}
 				
 			} else {

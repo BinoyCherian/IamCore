@@ -10,6 +10,9 @@ import java.util.List;
 import fr.epita.iam.constants.Constants;
 import fr.epita.iam.constants.SqlConstants;
 import fr.epita.iam.datamodel.Identity;
+import fr.epita.iam.exceptions.IdentityException;
+import fr.epita.iam.exceptions.SearchIdentityException;
+import fr.epita.iam.service.DBConnection;
 import fr.epita.logger.Logger;
 
 /**
@@ -109,10 +112,12 @@ public class IdentitiesDao implements DaoInterface{
 	 * @param identity The identity object
 	 * @param operation The operation to be performed
 	 * @return boolean TRUE or FALSE
+	 * @throws IdentityException The exception related to update, insert or create database operation
 	 */
-	public boolean updateDeleteAndInsert(Identity identity, String operation) {
+	public boolean updateDeleteAndInsert(Identity identity, String operation) throws IdentityException{
 		
 		int executed = 0;
+		
 		try {
 			if (operation != null && connection != null) {
 				if (operation.equalsIgnoreCase(Constants.UPDATE_OPERATION)) {
@@ -157,6 +162,7 @@ public class IdentitiesDao implements DaoInterface{
 			
 		} catch (SQLException e) {
 			logger.error(Constants.EXCEPTION, e);
+			throw new IdentityException(e, identity, operation);
 		}
 		return false;
 	}
@@ -224,8 +230,9 @@ public class IdentitiesDao implements DaoInterface{
 	 * 
 	 * @param criteria The search criteria
 	 * @return List The list of identities
+	 * @throws SearchIdentityException The exception related to the search operation.
 	 */
-	public List<Identity> getIdentities(Identity criteria) {
+	public List<Identity> getIdentities(Identity criteria) throws SearchIdentityException {
 		
 		List<Identity> identitiesList=null;
 		Identity identityLocal=null;
@@ -270,6 +277,8 @@ public class IdentitiesDao implements DaoInterface{
 			}
 		} catch (SQLException e) {
 			logger.error(Constants.EXCEPTION, e);
+			
+			throw new SearchIdentityException(e, criteria);
 		}
 		finally {
 			try {

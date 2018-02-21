@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import fr.epita.iam.constants.Constants;
 import fr.epita.iam.constants.SqlConstants;
 import fr.epita.iam.datamodel.Login;
+import fr.epita.iam.service.DBConnection;
 import fr.epita.logger.Logger;
 
 /**

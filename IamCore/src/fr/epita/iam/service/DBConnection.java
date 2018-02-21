@@ -1,4 +1,4 @@
-package fr.epita.iam.dao;
+package fr.epita.iam.service;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 import fr.epita.iam.constants.Constants;
-import fr.epita.iam.constants.DBProperties;
 import fr.epita.logger.Logger;
 
 /**

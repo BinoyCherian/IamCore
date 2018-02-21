@@ -1,10 +1,11 @@
-package fr.epita.iam.constants;
+package fr.epita.iam.service;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import fr.epita.iam.constants.Constants;
 import fr.epita.logger.Logger;
 
 /**
