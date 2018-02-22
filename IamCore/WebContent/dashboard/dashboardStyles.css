@@ -1,0 +1,27 @@
+html, body {
+    background-color: #e4e4e4
+}
+
+.container {
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 50px;
+    
+    height: 500px;
+    background-color: white;
+}
+
+.title {
+    text-align: center;
+    padding: 10px;
+    margin: 20px;
+}
+
+.vertical {
+    min-height: 50%;  /* Fallback for browsers do NOT support vh unit */
+    min-height: 50vh; /* These two lines are counted as one :-)       */
+
+    display: flex;
+    align-items: center;
+}

@@ -33,7 +33,7 @@ public class LoginController extends HttpServlet{
 	
 
 	/** 
-	 * The doGet method
+	 * The doGet method of the controller
 	 * 
 	 * @see javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
 	 */
@@ -57,6 +57,12 @@ public class LoginController extends HttpServlet{
 	}
 
 
+	/**
+	 * Method to handle the search operation.
+	 * 
+	 * @param req The http request
+	 * @param resp The http response
+	 */
 	public void searchData(HttpServletRequest req, HttpServletResponse resp) {
 		List<Identity> identities = null;
 		
@@ -82,7 +88,12 @@ public class LoginController extends HttpServlet{
 		}
 	}
 
-
+	/**
+	 * Method hoisting the delete operation.
+	 * 
+	 * @param req The http request
+	 * @param resp The http response
+	 */
 	public void deleteData(HttpServletRequest req, HttpServletResponse resp) {
 		Identity identity = new Identity();
 		identity.setUid(req.getParameter(Constants.UID_DB_COLOUMN));
@@ -106,6 +117,12 @@ public class LoginController extends HttpServlet{
 	}
 
 
+	/**
+	 * The method for updating the data.
+	 * 
+	 * @param req The http request
+	 * @param resp The http response
+	 */
 	public void updateData(HttpServletRequest req, HttpServletResponse resp) {
 		Identity identity = new Identity();
 		identity.setDisplayName(req.getParameter(Constants.DISPLAY_NAME_DB_COLOUMN));
@@ -131,6 +148,12 @@ public class LoginController extends HttpServlet{
 	}
 
 
+	/**
+	 * The create method for the controller
+	 * 
+	 * @param req The http request
+	 * @param resp The http response
+	 */
 	public void createData(HttpServletRequest req, HttpServletResponse resp) {
 		Identity identity = populateIdentity(req);
 		boolean status = false;
@@ -154,6 +177,12 @@ public class LoginController extends HttpServlet{
 	}
 
 
+	/**
+	 * Method to load the identity from the controller.
+	 * 
+	 * @param req The http request
+	 * @return Identity The identity populated from the http request
+	 */
 	public Identity populateIdentity(HttpServletRequest req) {
 		Identity identity = new Identity();
 		identity.setDisplayName(req.getParameter(Constants.DISPLAY_NAME_DB_COLOUMN));
@@ -163,6 +192,12 @@ public class LoginController extends HttpServlet{
 	}
 
 
+	/**
+	 * The method handling the login operation.
+	 * 
+	 * @param req The http request
+	 * @param resp The http response
+	 */
 	public void login(HttpServletRequest req, HttpServletResponse resp) {
 		Login loginRequest = new Login();
 		loginRequest.setEmail(req.getParameter(Constants.EMAIL));
