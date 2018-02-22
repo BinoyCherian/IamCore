@@ -62,6 +62,12 @@ public class Constants {
 	/** The constant for the email database coloumn */
 	public static final String EMAIL_DB_COLOUMN="EMAIL";
 	
+	/** The constant for the success page used in the controller */
+	public static final String SUCCESSPAGE="successPage";
+	
+	/** The constant for the error page used in the controller */
+	public static final String ERRORPAGE="errorPage";
+	
 	private Constants() {
 	}
 	
