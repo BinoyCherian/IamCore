@@ -43,13 +43,9 @@ public class LoginController extends HttpServlet{
 		if ((req.getRequestURL() + "").contains(Constants.LOGIN)) {
 
 			login(req, resp);
-		}else if((req.getRequestURL() + "").contains(Constants.CREATE_OPERATION)) {
-			createData(req, resp);
 		}else if((req.getRequestURL() + "").contains(Constants.UPDATE_OPERATION)) {
-			
 			updateData(req, resp);
 		}else if((req.getRequestURL() + "").contains(Constants.DELETE_OPERATION)) {
-			
 			deleteData(req, resp);
 		}else if((req.getRequestURL() + "").contains(Constants.READ_OPERATION)) {
 			searchData(req, resp);
@@ -210,7 +206,7 @@ public class LoginController extends HttpServlet{
 			logger.info("Admin, Send to a new page with more rights");
 			try {
 				//send to the dashboard.
-				 resp.sendRedirect("adminPage.html");
+				 resp.sendRedirect("adminpage.html");
 				 
 			} catch (IOException e) {
 				logger.error(Constants.EXCEPTION, e);

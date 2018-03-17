@@ -56,4 +56,29 @@ public class DBConnection {
 			
 		return con;
 	}
+	
+	/**
+	 * Method to create and return a database connection using lambda. 
+	 * 
+	 * @return Connection The connection object
+	 */
+	public static Connection getUltimateConnection() {
+		
+		DBConnectionInterface lamdaConnection = properties -> {
+			
+			try {
+				Class.forName(properties.getProperty(Constants.DRIVER)).newInstance();
+				con=DriverManager.getConnection(properties.getProperty(Constants.DB_URL), properties.getProperty(Constants.DB_USER), 
+						properties.getProperty(Constants.DB_PASSWORD));
+				
+			} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e) {
+				logger.error(Constants.EXCEPTION, e);
+			}
+			
+			return con;
+		};
+		
+		return lamdaConnection.getDbConnection(properties);
+	}
+	
 }
