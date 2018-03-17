@@ -41,7 +41,6 @@ public class LoginController extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp){
 		
 		if ((req.getRequestURL() + "").contains(Constants.LOGIN)) {
-
 			login(req, resp);
 		}else if((req.getRequestURL() + "").contains(Constants.UPDATE_OPERATION)) {
 			updateData(req, resp);
@@ -51,7 +50,6 @@ public class LoginController extends HttpServlet{
 			searchData(req, resp);
 		}
 	}
-
 
 	/**
 	 * Method to handle the search operation.
