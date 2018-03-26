@@ -239,7 +239,7 @@ public class IdentitiesDao implements DaoInterface{
 		ResultSet resultSet = null;
 		
 		final String sqlString = "SELECT DISPLAY_NAME, EMAIL, UID FROM IDENTITIES " + "WHERE (? IS NULL OR DISPLAY_NAME LIKE ?) "
-				+ "AND (? IS NULL OR EMAIL LIKE ?) " + "AND (? IS NULL OR UID = ?)";
+				+ "AND (? IS NULL OR EMAIL LIKE ?) " + "AND (? IS NULL OR UID LIKE ?)";
 
 
 		try {
@@ -254,7 +254,7 @@ public class IdentitiesDao implements DaoInterface{
 				preparedStatement.setString(3, criteria.getEmail());
 				preparedStatement.setString(4, criteria.getEmail() + "%");
 				preparedStatement.setString(5, criteria.getUid());
-				preparedStatement.setString(6, criteria.getUid());
+				preparedStatement.setString(6, criteria.getUid() + "%");
 
 			}
 			

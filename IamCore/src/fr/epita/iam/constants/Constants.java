@@ -33,7 +33,7 @@ public class Constants {
 	public static final String CREATE_OPERATION = "create";
 
 	/** The constant for the read operation */
-	public static final String READ_OPERATION = "read";
+	public static final String SEARCH_OPERATION = "search";
 
 	/** The constant for the create operation */
 	public static final String UPDATE_OPERATION = "update";

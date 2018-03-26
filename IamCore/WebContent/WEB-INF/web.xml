@@ -32,6 +32,9 @@ version="3.0">
    <servlet-mapping>
    	<servlet-name>IdentityController</servlet-name>
    	<url-pattern>/create</url-pattern>
+   	<url-pattern>/search</url-pattern>
+   	<url-pattern>/update</url-pattern>
+   	<url-pattern>/delete</url-pattern>
    </servlet-mapping>
    
 </web-app>
