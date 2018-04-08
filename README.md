@@ -23,7 +23,9 @@ Every effort has been made to richly comment possibly everything in the project 
 
 #Things still left to be done- 
 
-The backend operations have been tested. The project lacks a rich front end design. The flow needs to be tested once the front end is available.
-
+The project has a front end design which needs to be responsive. 
+Some parts of the flow needs to be tested.
 Jmeter testing to see the performance of the application.
+Session management.
+Code cleaning and some more test cases.
 
