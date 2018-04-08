@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import fr.epita.iam.constants.Constants;
 import fr.epita.iam.datamodel.Login;
 import fr.epita.iam.service.LoginService;
+import fr.epita.iam.service.Reuse;
 import fr.epita.logger.Logger;
 
 /**
@@ -115,29 +116,20 @@ public class LoginController extends HttpServlet{
 	 * @return Login The populated login object
 	 */
 	public Login populateLoginInfo(HttpServletRequest req, String operation) {
+
 		Login loginRequest = null;
 		
-		if (isNotNull(req.getParameter(Constants.LOGIN_PASSWORD))
-				&& isNotNull(req.getParameter(Constants.EMAIL))) {
+		if (Reuse.isNotNull(req.getParameter(Constants.LOGIN_PASSWORD))
+				&& Reuse.isNotNull(req.getParameter(Constants.EMAIL))) {
 			loginRequest = new Login();
 			loginRequest.setEmail(req.getParameter(Constants.EMAIL));
 			loginRequest.setPassword(req.getParameter(Constants.LOGIN_PASSWORD));
 
 			if (null!=operation && operation.equalsIgnoreCase(Constants.CREATE_LOGIN)
-					&& isNotNull(req.getParameter(Constants.CONFIRM_LOGIN_PASSWORD))) {
+					&& Reuse.isNotNull(req.getParameter(Constants.CONFIRM_LOGIN_PASSWORD))) {
 				loginRequest.setConfirmPassword(req.getParameter(Constants.CONFIRM_LOGIN_PASSWORD));
 			}
 		}
 		return loginRequest;
-	}
-
-	/**
-	 * Method to check if the parameter is null or not.
-	 * 
-	 * @param parameter The string parameter to be tested
-	 * @return boolean The indicaters TRUE/FALSE
-	 */
-	private boolean isNotNull(String parameter) {
-		return (null==parameter)?true:false;
 	}
 }

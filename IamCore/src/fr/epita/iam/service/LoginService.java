@@ -34,11 +34,20 @@ public class LoginService {
 	 * @return TRUE/FALSE
 	 */
 	public boolean createLogin(Login loginRequest) {
-		if (loginRequest.getConfirmPassword().equals(loginRequest.getPassword()))
-			return login.createAdmin(loginRequest);
-		else {
-			//TODO do some logging here to indicate the password mismatch
-			return false;
+		
+		if ((null != loginRequest) && (Reuse.isNotNull(loginRequest.getConfirmPassword()))
+				&& (Reuse.isNotNull(loginRequest.getEmail())) 
+				&& (Reuse.isNotNull(loginRequest.getPassword()))) {
+			
+			if (loginRequest.getConfirmPassword().equals(loginRequest.getPassword()))
+				return login.createAdmin(loginRequest);
+			else {
+				// TODO do some logging here to indicate the password mismatch
+				return false;
+			}
 		}
+		return false;
+		
+		
 	}
 }

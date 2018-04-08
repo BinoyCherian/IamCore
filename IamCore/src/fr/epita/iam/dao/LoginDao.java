@@ -33,8 +33,8 @@ public class LoginDao implements LoginDAOInterface{
 	 * Constructor
 	 */
 	public LoginDao() {
-		//connection = DBConnection.getConnection();
-		connection = DBConnection.getUltimateConnection();
+		connection = DBConnection.getConnection();
+		//connection = DBConnection.getUltimateConnection();
 	}
 	
 
