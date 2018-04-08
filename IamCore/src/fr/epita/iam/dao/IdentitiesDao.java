@@ -284,6 +284,11 @@ public class IdentitiesDao implements DaoInterface{
 			try {
 				if(resultSet != null)
 				resultSet.close();
+				
+				if(preparedStatement != null)
+					preparedStatement.close();
+				
+				connection.close();
 			} catch (SQLException e) {
 				logger.error(Constants.EXCEPTION, e);
 			}

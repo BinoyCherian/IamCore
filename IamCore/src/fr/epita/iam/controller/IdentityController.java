@@ -88,7 +88,7 @@ public class IdentityController extends HttpServlet {
 			if (identities != null && !identities.isEmpty()) {
 				HttpSession session = req.getSession(true);
 				session.setAttribute("identities", identities);
-				resp.sendRedirect(Constants.SUCCESSPAGE);
+				resp.sendRedirect("results.jsp");
 			} else {
 				resp.sendRedirect(Constants.ERRORPAGE);
 			}

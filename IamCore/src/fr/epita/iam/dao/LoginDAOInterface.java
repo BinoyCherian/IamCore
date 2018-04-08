@@ -8,7 +8,7 @@ import fr.epita.iam.datamodel.Login;
  * @author raaool
  *
  */
-public interface LoginInterface {
+public interface LoginDAOInterface {
 	
 	/**
 	 * The operation to check the login.
@@ -17,5 +17,13 @@ public interface LoginInterface {
 	 * @return TRUE/FALSE
 	 */
 	boolean checkLogin(Login loginRequest);
+	
+	/**
+	 * The operation to create a admin.
+	 * 
+	 * @param loginRequest The login request
+	 * @return TRUE/FALSE
+	 */
+	boolean createAdmin(Login loginRequest);
 
 }

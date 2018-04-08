@@ -1,7 +1,7 @@
 package fr.epita.iam.service;
 
 import fr.epita.iam.dao.LoginDao;
-import fr.epita.iam.dao.LoginInterface;
+import fr.epita.iam.dao.LoginDAOInterface;
 import fr.epita.iam.datamodel.Login;
 
 /**
@@ -13,7 +13,7 @@ import fr.epita.iam.datamodel.Login;
  */
 public class LoginService {
 	
-	private LoginInterface login;
+	private LoginDAOInterface login;
 	
 	/**
 	 * Login service Controller
@@ -24,5 +24,21 @@ public class LoginService {
 	
 	public boolean loginservice(Login loginRequest) {
 		return login.checkLogin(loginRequest);
+	}
+	
+	/**
+	 * The service method to create a new admin. The method will return false if the
+	 * both the password's(cnfpwd and password) don't match.
+	 * 
+	 * @param loginRequest The login request
+	 * @return TRUE/FALSE
+	 */
+	public boolean createLogin(Login loginRequest) {
+		if (loginRequest.getConfirmPassword().equals(loginRequest.getPassword()))
+			return login.createAdmin(loginRequest);
+		else {
+			//TODO do some logging here to indicate the password mismatch
+			return false;
+		}
 	}
 }

@@ -37,6 +37,9 @@ public class SqlConstants {
 	
 	/** The constant for the AND CLAUSE*/
 	public static final String AND_CLAUSE = "AND";
+
+	/** The sql string to create a new admin **/
+	public static final String CREATE_ADMIN = "INSERT INTO LOGIN(LOGIN_EMAIL,PASSWORD) VALUES (?,?)";
 	
 	/**
 	 * Private Constructor

@@ -17,7 +17,7 @@ import fr.epita.logger.Logger;
  * @author raaool
  *
  */
-public class LoginDao implements LoginInterface{
+public class LoginDao implements LoginDAOInterface{
 	
 	/** The connection object */
 	Connection connection;
@@ -70,12 +70,49 @@ public class LoginDao implements LoginInterface{
 		}
 		finally {
 			try {
-				if(resultSet != null)
-				resultSet.close();
+				if (resultSet != null)
+					resultSet.close();
+
+				if (preparedStatement != null) {
+					preparedStatement.close();
+				}
+
+				connection.close();
+
 			} catch (SQLException e) {
-				logger.error(Constants.EXCEPTION, e);			}
+				logger.error(Constants.EXCEPTION, e);
+			}
 		}
 		
+		return false;
+	}
+
+	public boolean createAdmin(Login loginRequest) {
+
+		try {
+			preparedStatement = connection.prepareStatement(SqlConstants.CREATE_ADMIN);
+			// The username can be case-insensitive but password cannot be tolerated
+			preparedStatement.setString(1, loginRequest.getEmail().toUpperCase());
+			preparedStatement.setString(2, loginRequest.getPassword());
+
+			int executed = preparedStatement.executeUpdate();
+
+			if (executed > 0)
+				return true;
+
+		} catch (SQLException e) {
+			logger.error(Constants.EXCEPTION, e);
+		}finally {
+			try {
+				if (preparedStatement != null) {
+					preparedStatement.close();
+				}
+
+				connection.close();
+			} catch (SQLException e) {
+				logger.error(Constants.EXCEPTION, e);
+			}
+		}
 		return false;
 	}
 }

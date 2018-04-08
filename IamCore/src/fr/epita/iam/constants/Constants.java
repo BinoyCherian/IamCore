@@ -67,6 +67,12 @@ public class Constants {
 	
 	/** The constant for the error page used in the controller */
 	public static final String ERRORPAGE="errorPage";
+
+	/** The constant for the create new admin operation*/
+	public static final String CREATE_LOGIN = "createAdmin";
+
+	/** The constant for the confirm login password field **/
+	public static final String CONFIRM_LOGIN_PASSWORD = "confirmLogin";
 	
 	private Constants() {
 	}
